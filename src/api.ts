@@ -1,13 +1,37 @@
 import * as SocketIO from 'socket.io';
 
+/**
+ * Send message to target
+ * @param {SocketIO.Socket} socket
+ * @param {string} target
+ * @param {string} ack
+ * @param {Object | any} packet
+ */
 function sendMessage(socket: SocketIO.Socket, target: string, ack: string, packet: Object | any) : void
 {
     sendAPIEvent(socket, target, ack, APIMessageType.message, packet)
 }
 
+/**
+ * Send question to target. Typically you would also listen for a reply back event
+ * @param {SocketIO.Socket} socket
+ * @param {string} target
+ * @param {string} ack
+ * @param {Object | any} packet
+ */
 function sendQuestion(socket: SocketIO.Socket, target: string, ack: string, packet: Object | any) : void
 {
     sendAPIEvent(socket, target, ack, APIMessageType.question, packet)
+}
+
+/**
+ * Send log message to the API server
+ * @param {SocketIO.Socket} socket
+ * @param {string} message
+ * @param {LogType} type
+ */
+function sendLog(socket: SocketIO.Socket, message: string, type: LogType) {
+    socket.emit("log",{log:message, type:LogType[type]});
 }
 
 /**
@@ -70,9 +94,21 @@ enum APIMessageType {
     'question'
 }
 
+/**
+ * Log message type.
+ */
+enum LogType{
+    'log' = 'log',
+    'error' = 'error',
+    'info' = 'info',
+    'warn' = 'warn'
+}
+
 export {
     sendMessage,
     sendQuestion,
+    sendLog,
     APIMessage,
-    APIMessageType
+    APIMessageType,
+    LogType
 }
