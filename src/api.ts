@@ -9,7 +9,7 @@ import * as SocketIO from 'socket.io';
  */
 function sendMessage(socket: SocketIO.Socket, target: string, ack: string, packet: Object | any) : void
 {
-    sendAPIEvent(socket, target, ack, APIMessageType.message, packet)
+    sendAPIEvent(socket, target, ack, APIMessageType.message, packet);
 }
 
 /**
@@ -21,7 +21,7 @@ function sendMessage(socket: SocketIO.Socket, target: string, ack: string, packe
  */
 function sendQuestion(socket: SocketIO.Socket, target: string, ack: string, packet: Object | any) : void
 {
-    sendAPIEvent(socket, target, ack, APIMessageType.question, packet)
+    sendAPIEvent(socket, target, ack, APIMessageType.question, packet);
 }
 
 /**
@@ -42,7 +42,7 @@ function sendLog(socket: SocketIO.Socket, message: string, type: LogType) {
  * @param {APIMessageType} type
  * @param {Object | any} packet
  */
-function sendAPIEvent(socket: SocketIO.Socket, target:string, ack: string, type: APIMessageType, packet: Object | any) : void
+function sendAPIEvent(socket: SocketIO.Socket, target: string, ack: string, type: APIMessageType, packet: Object | any) : void
 {
     if(socket)
         socket.emit('api-message', {
